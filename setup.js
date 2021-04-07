@@ -1,5 +1,7 @@
 const config = require('./config'),
-      axios = require('axios');
+      // TODO axios REST calls not working against Manage on 8002
+      //axios = require('axios'),
+      rp = require('request-promise');
 
 function handleError(err) {
   if (err.error &&
@@ -14,15 +16,16 @@ function handleError(err) {
 function createREST() {
   var options = {
     method: 'POST',
-    uri: 'http://' + config.host + ':8002/LATEST/rest-apis',
-    data: config.restSetup,
+    uri: 'http://localhost:8002/v1/rest-apis',
+    body: config.restSetup,
+    json: true,
     headers: {
       'Content-Type': 'application/json'
     },
     auth: config.auth
   };
   console.log(options);
-  axios(options)
+  rp(options)
     .then(function (parsedBody) {
       console.log('REST instance created at port: ' + config.restSetup["rest-api"]["port"]);
     })

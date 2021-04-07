@@ -1,5 +1,6 @@
 var config = {};
 
+// TODO alternative:
 // curl -X POST --anyauth --user admin:admin -d @"./setup.json" \
 // -H "Content-type: application/json" 'http://localhost:8002/LATEST/rest-apis'
 
@@ -13,16 +14,16 @@ config.database = {
 
 config.auth = {
   username: 'admin',
-  password: 'admin'
+  password: 'admin',
+  sendImmediately: false
 };
 
 config.restSetup = {
   "rest-api": {
     "name": config.database.name + "-rest",
     "database": config.database.name,
-    //"modules-database": config.database.modules,
     "port": config.database.port,
-    //"error-format": "json"
+    "error-format": "json"
   }
 }
 
