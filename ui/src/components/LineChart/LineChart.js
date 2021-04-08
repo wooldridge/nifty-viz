@@ -6,7 +6,7 @@ import axios from "axios";
 
 
 const test = async () => {
-  const result = await axios.get('http://localhost:8002/admin/v1/timestamp');
+  const result = await axios.get('http://localhost:8889/api/test');
   console.log(result);
 };
 

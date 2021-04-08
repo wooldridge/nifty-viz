@@ -27,6 +27,14 @@ config.restSetup = {
   }
 }
 
+config.marklogic = {
+  host: config.host,
+  port:	config.database.port,
+  user:	config.auth.username,
+  password: config.auth.password,
+  authType: 'digest'
+}
+
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
   module.exports = config;
 }
