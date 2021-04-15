@@ -9,9 +9,11 @@ Visualize NFT data with MarkLogic Data Hub.
 
 ## Set Up MarkLogic Data Hub Nifty Project
 
-1. See: https://github.com/wooldridge/data-hub-nifty-project
+A MarkLogic Data Hub instance provides the NFT data. See: https://github.com/wooldridge/data-hub-nifty-project
 
 ## Run Server
+
+In first terminal:
 
 1. `cd server`
 2. `npm install`
@@ -19,6 +21,8 @@ Visualize NFT data with MarkLogic Data Hub.
 4. `node server` (Start middle tier)
 
 ## Run UI
+
+In second terminal:
 
 1. `cd ui`
 2. `npm install`
