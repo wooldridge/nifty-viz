@@ -1,5 +1,3 @@
-import axios from "axios";
-
 const lineOptions = {
     chart: {
         type: 'spline'
