@@ -7,42 +7,11 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Set up MARKLOGIC
+// Set up MarkLogic API
 var db = marklogic.createDatabaseClient(config.marklogic);
-console.log(db);
-var q = marklogic.queryBuilder;
 const op = marklogic.planBuilder;
- 
-const booksTest = [
-    {title: 'Harry Potter', id: 1},
-    {title: 'Twilight', id: 2},
-    {title: 'Lorien Legacies', id: 3}
-]
- 
-app.get('/', (req, res) => {
-    res.send('Welcome!');
-});
- 
-app.get('/api/books', (req,res)=> {
-    res.send(booksTest);
-});
 
-// GET photo
-app.post('/api/test', cors(), function(req, res, next) {
-    console.log(req.body);
-    const nfts = op.fromView(null, 'Nft');
-    const results = op.fromView(null, 'Results');
-    const plan = nfts.joinInner(results, op.on(nfts.col('nftId'), results.col('forNft')))
-        .orderBy(op.desc('priceChangePercent'))
-        .limit(10);
-    db.rows.query(plan, { format: 'json', structure: 'object', columnTypes: 'rows' })
-    .then(function(results) {
-        res.json(results);
-    }, function(error) {
-        console.dir(error);
-    });
-});
-
+// Add order by, order direction info to plan if needed
 const checkOrder = (plan, query) => {
     if (query.orderBy) {
         if (query.orderDir && query.orderDir === "desc") {
@@ -55,6 +24,7 @@ const checkOrder = (plan, query) => {
     }
 }
 
+// Add limit info to plan if needed
 const checkLimit = (plan, query) => {
     if (query.limit) {
         return plan.limit(parseInt(query.limit));
@@ -63,7 +33,7 @@ const checkLimit = (plan, query) => {
     }
 }
 
-// GET all Nifties
+// GET all NFTs
 app.get('/api/nfts', cors(), function(req, res, next) {
     console.log(req.body);
     const nfts = op.fromView(null, 'Nft');
@@ -82,7 +52,7 @@ app.get('/api/nfts', cors(), function(req, res, next) {
     });
 });
 
-// GET a Nifty by ID
+// GET an NFT by ID
 app.get('/api/nfts/:id', cors(), function(req, res, next) {
     console.log(req.body);
     const nftId = req.params["id"];
@@ -133,7 +103,7 @@ app.get('/api/artists/:id', cors(), function(req, res, next) {
     });
 });
 
-// GET an Artist's Nifties
+// GET an Artist's NFTs
 app.get('/api/artists/:id/nfts', cors(), function(req, res, next) {
     console.log(req.body);
     const artistId = req.params["id"];
@@ -154,6 +124,6 @@ app.get('/api/artists/:id/nfts', cors(), function(req, res, next) {
 });
 
  
-// PORT ENVIRONMENT VARIABLE
+// Set port, start server
 const port = process.env.PORT || 8889;
 app.listen(port, () => console.log(`Listening on port ${port}..`));

@@ -2,15 +2,6 @@ import React, {useState, useEffect} from "react";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import axios from "axios";
-import marklogic from "marklogic";
-
-var db = marklogic.createDatabaseClient({
-  host: "localhost",
-  port:	8889,
-  user:	"admin",
-  password: "admin",
-  authType: 'digest'
-});
 
 const LineChart = () => {
 
@@ -28,7 +19,7 @@ const LineChart = () => {
 
   const test = async () => {
     try {
-      const result = await axios.post('http://localhost:8889/api/test', {"foo": 123});
+      const result = await axios.get('http://localhost:8889/api/nfts?limit=20&orderBy=priceChangePercent&orderDir=desc');
       if (result) {
         let valsMapped = result.data.rows.map(r => {
           return r["Results.Results.priceChangePercent"].value;
