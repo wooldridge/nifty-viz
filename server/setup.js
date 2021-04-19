@@ -13,6 +13,7 @@ function handleError(err) {
   }
 }
 
+// TODO not needed? Use Data Hub final server...
 function createREST() {
   var options = {
     method: 'POST',

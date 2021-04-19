@@ -35,7 +35,7 @@ const checkLimit = (plan, query) => {
 
 // GET all NFTs
 app.get('/api/nfts', cors(), function(req, res, next) {
-    console.log(req.body);
+    console.log("GET /api/nfts");
     const nfts = op.fromView(null, 'Nft');
     const artists = op.fromView(null, 'Artist');
     const results = op.fromView(null, 'Results');
@@ -43,7 +43,6 @@ app.get('/api/nfts', cors(), function(req, res, next) {
         .joinInner(artists, op.on(nfts.col('byArtist'), artists.col('artistId')));
     plan = checkOrder(plan, req.query);
     plan = checkLimit(plan, req.query);
-    console.log(plan);
     db.rows.query(plan, { format: 'json', structure: 'object', columnTypes: 'rows' })
     .then(function(results) {
         res.json(results);
@@ -54,7 +53,7 @@ app.get('/api/nfts', cors(), function(req, res, next) {
 
 // GET an NFT by ID
 app.get('/api/nfts/:id', cors(), function(req, res, next) {
-    console.log(req.body);
+    console.log("GET /api/nfts/" + req.params["id"]);
     const nftId = req.params["id"];
     const nfts = op.fromView(null, 'Nft');
     const artists = op.fromView(null, 'Artist');
@@ -74,7 +73,7 @@ app.get('/api/nfts/:id', cors(), function(req, res, next) {
 
 // GET all Artists
 app.get('/api/artists', cors(), function(req, res, next) {
-    console.log(req.body);
+    console.log("GET /api/artists");
     const artists = op.fromView(null, 'Artist');
     let plan = artists;
     plan = checkOrder(plan, req.query);
@@ -89,7 +88,7 @@ app.get('/api/artists', cors(), function(req, res, next) {
 
 // GET an Artist by ID
 app.get('/api/artists/:id', cors(), function(req, res, next) {
-    console.log(req.body);
+    console.log("GET /api/artists/" + req.params["id"]);
     const artistId = req.params["id"];
     const artists = op.fromView(null, 'Artist');
     let plan = artists.where(op.eq(artists.col('artistId'), artistId));
@@ -105,7 +104,7 @@ app.get('/api/artists/:id', cors(), function(req, res, next) {
 
 // GET an Artist's NFTs
 app.get('/api/artists/:id/nfts', cors(), function(req, res, next) {
-    console.log(req.body);
+    console.log("GET /api/artists/" + req.params["id"] + "/nfts");
     const artistId = req.params["id"];
     const nfts = op.fromView(null, 'Nft');
     const artists = op.fromView(null, 'Artist');

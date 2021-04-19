@@ -7,9 +7,9 @@ var config = {};
 config.host = "localhost";
 
 config.database = {
-  "name": "data-hub-FINAL",
-  "modules": "data-hub-MODULES",
-  "port": 8554
+  name: "data-hub-FINAL",
+  modules: "data-hub-MODULES",
+  port: 8011 // Default Data Hub port for FINAL
 };
 
 config.auth = {
@@ -18,11 +18,12 @@ config.auth = {
   sendImmediately: false
 };
 
+// TODO not needed? Use Data Hub final server...
 config.restSetup = {
   "rest-api": {
-    "name": config.database.name + "-rest",
-    "database": config.database.name,
-    "port": config.database.port,
+    name: config.database.name + "-rest",
+    database: config.database.name,
+    port: config.database.port,
     "error-format": "json"
   }
 }
@@ -32,7 +33,7 @@ config.marklogic = {
   port:	config.database.port,
   user:	config.auth.username,
   password: config.auth.password,
-  authType: 'digest'
+  authType: "digest"
 }
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
