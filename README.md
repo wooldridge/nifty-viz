@@ -17,7 +17,7 @@ In first terminal:
 
 1. `cd server`
 2. `npm install`
-3. `node setup` (Install REST server on MarkLogic to server Data Hub content)
+3. `node setup` (Install REST server on MarkLogic to serve Data Hub content)
 4. `node server` (Start middle tier)
 
 ## Run UI
