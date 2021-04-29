@@ -6,7 +6,7 @@ import {
   Link
 } from "react-router-dom";
 import BarChart from './components/BarChart/BarChart';
-import LineChart from './components/LineChart/LineChart';
+import NftSales from './components/NftSales/NftSales';
 
 export default function App() {
   return (
@@ -20,7 +20,7 @@ export default function App() {
             <Link to="/barchart">Bar Chart</Link>
           </li>
           <li>
-            <Link to="/linechart">Line Chart</Link>
+            <Link to="/nftsales">NFT Sales Stats</Link>
           </li>
         </ul>
 
@@ -35,8 +35,8 @@ export default function App() {
           <Route path="/barchart">
             <BarChart />
           </Route>
-          <Route path="/linechart">
-            <LineChart />
+          <Route path="/nftsales">
+            <NftSales />
           </Route>
         </Switch>
       </div>

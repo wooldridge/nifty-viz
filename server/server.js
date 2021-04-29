@@ -24,6 +24,16 @@ const checkOrder = (plan, query) => {
     }
 }
 
+// Add group by info to plan if needed
+const checkGroup = (plan, query, columns) => {
+    const nfts = op.fromView(null, 'Nft');
+    if (query.groupBy) {
+        return plan.groupBy(nfts.col(query.groupBy), columns);
+    } else {
+        return plan;
+    }
+}
+
 // Add limit info to plan if needed
 const checkLimit = (plan, query) => {
     if (query.limit) {
@@ -35,12 +45,16 @@ const checkLimit = (plan, query) => {
 
 // GET all NFTs
 app.get('/api/nfts', cors(), function(req, res, next) {
-    console.log("GET /api/nfts");
+    console.log(req.method + ' ' + req.url);
     const nfts = op.fromView(null, 'Nft');
     const artists = op.fromView(null, 'Artist');
     const results = op.fromView(null, 'Results');
+    // Columns from joined views to return
+    const columns = [nfts.col('name'), artists.col('name'), 'primarySales', 
+        'primaryPrice', 'secondarySales', 'secondaryPriceAvg', 'priceChangePercent'];
     let plan = nfts.joinInner(results, op.on(nfts.col('nftId'), results.col('forNft')))
         .joinInner(artists, op.on(nfts.col('byArtist'), artists.col('artistId')));
+    plan = checkGroup(plan, req.query, columns);
     plan = checkOrder(plan, req.query);
     plan = checkLimit(plan, req.query);
     db.rows.query(plan, { format: 'json', structure: 'object', columnTypes: 'rows' })

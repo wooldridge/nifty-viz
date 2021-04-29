@@ -1,15 +1,28 @@
 import React, {useState, useEffect} from "react";
+import QueryResult from '../../models/QueryResult';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import axios from "axios";
 
-const LineChart = () => {
+const LineChart = (props) => {
 
   const [chartOptions, setChartOptions] = useState({
+    chart: {
+      type: 'column'
+    },
+    title: {
+      text: 'NFT Statistics'
+    },
     xAxis: {
+      title: {
+        text: 'NFT Name'
+      },
       categories: [],
     },
     yAxis: {
+      title: {
+        text: 'Price Change %'
+      },
       type: 'logarithmic'
     },
     series: [
@@ -20,16 +33,14 @@ const LineChart = () => {
   const test = async () => {
     try {
       const result = await axios.get('http://localhost:8889/api/nfts?limit=20&orderBy=priceChangePercent&orderDir=desc');
+      console.log("result", result);
       if (result) {
-        let valsMapped = result.data.rows.map(r => {
-          return r["Results.Results.priceChangePercent"].value;
-        })
-        let namesMapped = result.data.rows.map(r => {
-          return r["Nft.Nft.name"].value;
-        })
+        let qr = new QueryResult(result);
+        let categories = qr.getColData("Nft.Nft.name");
+        let data = qr.getColData("Results.Results.priceChangePercent");
         setChartOptions({ 
-          series: [{ data: valsMapped }],
-          xAxis: { categories: namesMapped }
+          series: [{ data: data }],
+          xAxis: { categories: categories }
         });
       }
     } catch (error) {
