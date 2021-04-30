@@ -83,7 +83,7 @@ const NftSales = (props) => {
 
   const updateChart = async () => {
     try {
-      const result = await axios.get('http://localhost:8889/api/nfts?limit=20&orderBy=' + selectedStat.key + '&groupBy=name&orderDir=desc');
+      const result = await axios.get('http://localhost:8889/api/nfts?limit=40&orderBy=' + selectedStat.key + '&groupBy=name&orderDir=desc');
       if (result) {
         let qr = new QueryResult(result);
         let categories = qr.getColData(selectedCat.key + ".name");

@@ -5,7 +5,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import BarChart from './components/BarChart/BarChart';
+import Scatter from './components/Scatter/Scatter';
 import NftSales from './components/NftSales/NftSales';
 
 export default function App() {
@@ -17,7 +17,7 @@ export default function App() {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/barchart">Bar Chart</Link>
+            <Link to="/scatter">Scatter</Link>
           </li>
           <li>
             <Link to="/nftsales">NFT Sales Stats</Link>
@@ -32,8 +32,8 @@ export default function App() {
               <h2>Home</h2>
             </div>
           </Route>
-          <Route path="/barchart">
-            <BarChart />
+          <Route path="/scatter">
+            <Scatter />
           </Route>
           <Route path="/nftsales">
             <NftSales />
